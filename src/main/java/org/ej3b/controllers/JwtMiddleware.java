@@ -2,7 +2,7 @@ package org.ej3b.controllers;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
+import java.util.Map;
 public class JwtMiddleware {
     private final TokenManager tokenManager;
 

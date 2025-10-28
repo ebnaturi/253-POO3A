@@ -1,13 +1,13 @@
 package org.ej3b.controllers;
 
 import org.ej3b.models.Materia;
-import org.ej3b.models.UsuarioRegistro;
+import org.ej3b.models.Usuarios;
 import org.ej3b.services.MateriaService;
 
 import java.util.List;
 
 import io.javalin.http.Context;
-import io.javalin.http.HttpStatus;
+
 import java.sql.SQLException;
 
 import com.password4j.Password;
@@ -61,14 +61,15 @@ public class MateriaController {
             ctx.status(500).result("error al guardar la materia");
         }
     }
+    /*
     //esto no se debe de hacer solo es para prueba
     public void testUser(Context ctx){
-        UsuarioRegistro ur = ctx.bodyAsClass(UsuarioRegistro.class);
+        Usuarios ur = ctx.bodyAsClass(Usuarios.class);
 
         String hasPass = Password.hash(ur.getPass()).withBcrypt().getResult();
         System.out.println("EL usuario :" + ur.getUser()+" tiene el hash "+hasPass);
     }
-    /*
+
     public void loginUser(Context ctx){
         UsuarioRegistro ur = ctx.bodyAsClass(UsuarioRegistro.class);
         try{

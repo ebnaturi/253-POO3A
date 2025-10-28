@@ -13,9 +13,9 @@ import org.ej3b.models.Materia;
 public class Main {
     public static void main(String[] args) {
 
-        TokenManager tokenManager = new TokenManager();
+      /*  TokenManager tokenManager = new TokenManager();
         AuthController authController = new AuthController(tokenManager);
-        JwtMiddleware jwtMiddleware = new JwtMiddleware(tokenManager);
+        JwtMiddleware jwtMiddleware = new JwtMiddleware(tokenManager);*/
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
         Javalin app = Javalin.create(/*configuraciones*/)
@@ -23,5 +23,6 @@ public class Main {
 
 
         ConfigModules.initMateriaRouter().register(app);
+        ConfigModules.initUsuarios().register(app);
     }
 }

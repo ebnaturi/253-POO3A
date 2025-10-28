@@ -16,7 +16,7 @@ public class MateriaRouter {
         app.post("/materias",materiaController::savemateria);
         app.delete("/materias/{clave}",materiaController::deleteMateria);
         app.patch("/materias",materiaController::updatemateria);
-        app.post("/usuario",materiaController::testUser);
+        //app.post("/usuario",materiaController::testUser);
        // app.post("/login",materiaController::loginUser);
     }
 }
