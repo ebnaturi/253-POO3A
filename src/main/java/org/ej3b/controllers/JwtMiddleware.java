@@ -2,16 +2,20 @@ package org.ej3b.controllers;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import io.javalin.http.UnauthorizedResponse;
+
 import java.util.Map;
 public class JwtMiddleware {
     private final TokenManager tokenManager;
 
     public JwtMiddleware(TokenManager tokenManager) {
+
         this.tokenManager = tokenManager;
     }
 
     public void apply(Javalin app) {
         app.before("/api/protected/*", this::validateJwt);
+        app.before("/materias", this::validateJwt);
     }
 
     private void validateJwt(Context ctx) {
@@ -23,14 +27,14 @@ public class JwtMiddleware {
             ctx.status(401).json(Map.of(
                     "error", "Authorization header faltante o malformado"
             ));
-            return;
+            //return;
         }
 
         if (userId == null) {
             ctx.status(401).json(Map.of(
                     "error", "User-Id header requerido"
             ));
-            return;
+            //return;
         }
 
         // Extraer el token
@@ -42,6 +46,7 @@ public class JwtMiddleware {
                 ctx.status(403).json(Map.of(
                         "error", "Token inválido o expirado"
                 ));
+                throw new Exception("Token inválido o expirado");
             }
             // Token válido - la solicitud continúa
         } catch (Exception e) {
@@ -49,5 +54,13 @@ public class JwtMiddleware {
                     "error", "Error al validar el token"
             ));
         }
+
+        int status = ctx.statusCode();
+        if (status == 401 || status == 403) {
+            throw new UnauthorizedResponse("Error: " + ctx.result());
+        }
+    }
+    public void noAutorizo(UnauthorizedResponse  e, Context ctx){
+        ctx.status(401).json(Map.of("error", "Acceso no autorizado: "+e.getMessage()));
     }
 }

@@ -1,5 +1,6 @@
 package org.ej3b.config;
 
+import org.ej3b.controllers.JwtMiddleware;
 import org.ej3b.controllers.MateriaController;
 import org.ej3b.repositories.RepositoryMateria;
 import org.ej3b.repositories.RepositoryUsuario;
@@ -25,7 +26,8 @@ public class ConfigModules {
         UsuarioService usuarioService = new UsuarioService(repositoryUsuario);
         TokenManager tokenManager = new TokenManager();
         UsuarioController usuarioController = new UsuarioController(usuarioService,tokenManager);
-        UsuarioRouter usuarioRouter = new UsuarioRouter(usuarioController);
+        JwtMiddleware jwtMiddleware = new JwtMiddleware(tokenManager);
+        UsuarioRouter usuarioRouter = new UsuarioRouter(usuarioController,jwtMiddleware);
         return usuarioRouter;
 
     }
